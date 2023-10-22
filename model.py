@@ -18,6 +18,10 @@ y_pred = clf.predict(X_test)
 
 accuracy = accuracy_score(y_test, y_pred)
 confusion = confusion_matrix(y_test, y_pred)
+print(accuracy)
+with open("metrics.txt", "w") as outfile:
+    outfile.write("Accuracy: " + str(accuracy) + "\n")
+
 
 correct_examples = X_test[y_test == y_pred]
 incorrect_examples = X_test[y_test != y_pred]
