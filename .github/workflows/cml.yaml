@@ -1,0 +1,18 @@
+name: CML
+on: [push]
+jobs:
+  train-and-report:
+    runs-on: ubuntu-latest
+    container: docker://ghcr.io/iterative/cml:0-dvc2-base1
+    steps:
+      - uses: actions/checkout@v3
+      - name: Train model
+        env:
+          REPO_TOKEN: ${{ secrets.MY_TOKEN }}
+        run: |
+          pip install -r requirements.txt
+          python model.py 
+          cat metrics.txt >> report.md
+          echo '![](./true.png "Positive")' >> report.md
+          echo '![](./false.png "Negative")' >> report.md
+          cml comment create report.md
